@@ -5,10 +5,10 @@ import java.util.List;
 /*
  * Basic implementations for services that has any type of CRUD.
  */
-public interface ServiceAbstract {
+public interface BmService {
 
-    Dto create(Dto dto);
-    Dto update(Dto dto);
+    BmDto create(BmDto dto);
+    BmDto update(BmDto dto);
     void activateDeactivate(Long id, boolean isActive);
-    List<Dto> findByName(String keyword);        
+    List<BmDto> findByName(String keyword);        
 }
