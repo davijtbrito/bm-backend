@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
-import com.bm.businessmanagement.absctract.EntityAbstract;
+import com.bm.businessmanagement.absctracts.EntityAbstract;
 import com.bm.businessmanagement.enums.Role;
 
 import lombok.AllArgsConstructor;
