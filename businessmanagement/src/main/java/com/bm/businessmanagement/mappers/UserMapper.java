@@ -4,17 +4,17 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.bm.businessmanagement.absctracts.DtoAbstract;
-import com.bm.businessmanagement.absctracts.EntityAbstract;
-import com.bm.businessmanagement.absctracts.MapperAbstract;
+import com.bm.businessmanagement.absctracts.Dto;
+import com.bm.businessmanagement.absctracts.BmEntity;
+import com.bm.businessmanagement.absctracts.Mapper;
 import com.bm.businessmanagement.dtos.UserDto;
 import com.bm.businessmanagement.entities.UserEntity;
 
 @Component
-public class UserMapper implements MapperAbstract {            
+public class UserMapper implements Mapper {            
 
     @Override
-    public DtoAbstract entityToDto(EntityAbstract entity) {
+    public Dto entityToDto(BmEntity entity) {
         
         if (Objects.isNull(entity)){
             return null;
@@ -32,7 +32,7 @@ public class UserMapper implements MapperAbstract {
     }
 
     @Override
-    public EntityAbstract dtoToEntity_forCreation(DtoAbstract dto) {
+    public BmEntity dtoToEntity_forCreation(Dto dto) {
         if (Objects.isNull(dto)){
             return null;
         }

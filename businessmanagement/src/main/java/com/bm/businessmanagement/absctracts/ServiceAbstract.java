@@ -7,8 +7,8 @@ import java.util.List;
  */
 public interface ServiceAbstract {
 
-    DtoAbstract create(DtoAbstract dto);
-    DtoAbstract update(DtoAbstract dto);
+    Dto create(Dto dto);
+    Dto update(Dto dto);
     void activateDeactivate(Long id, boolean isActive);
-    List<DtoAbstract> findByName(String keyword);        
+    List<Dto> findByName(String keyword);        
 }

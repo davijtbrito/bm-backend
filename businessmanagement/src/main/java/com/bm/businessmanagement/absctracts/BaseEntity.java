@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity implements EntityAbstract{
+public abstract class BaseEntity implements BmEntity{
 
     protected Boolean active;// this metadata should be seeing only in database context
     protected LocalDateTime dateCreated;// this metadata should be seeing only in database context
