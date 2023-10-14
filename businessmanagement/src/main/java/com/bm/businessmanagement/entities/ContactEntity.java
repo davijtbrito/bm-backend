@@ -1,5 +1,7 @@
 package com.bm.businessmanagement.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "contact")
 public class ContactEntity extends BaseEntity {
+    
+    public ContactEntity(Long id, String email, String phone, Boolean active, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+        super(active, dateCreated, dateUpdated);
+        this.id = id;
+        this.email = email;
+        this.phone = phone;
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
