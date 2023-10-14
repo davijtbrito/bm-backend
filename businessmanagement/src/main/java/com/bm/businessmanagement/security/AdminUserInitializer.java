@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.bm.businessmanagement.absctracts.DtoAbstract;
+import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.dtos.UserDto;
 import com.bm.businessmanagement.enums.Role;
 import com.bm.businessmanagement.security.UserDetailsServiceImpl;
@@ -25,7 +25,7 @@ public class AdminUserInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        List<DtoAbstract> dtos = new ArrayList<>();
+        List<BmDto> dtos = new ArrayList<>();
         dtos = userService.getUserService().findByRole(Role.ADMIN);
 
         if (dtos.isEmpty()) {

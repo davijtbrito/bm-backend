@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
-import com.bm.businessmanagement.absctracts.EntityAbstract;
+import com.bm.businessmanagement.absctracts.BmEntity;
 import com.bm.businessmanagement.enums.Role;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class UserEntity implements EntityAbstract {
+public class UserEntity implements BmEntity {
     
 
     @Id

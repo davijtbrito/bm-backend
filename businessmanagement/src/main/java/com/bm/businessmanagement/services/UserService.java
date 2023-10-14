@@ -3,11 +3,13 @@ package com.bm.businessmanagement.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bm.businessmanagement.absctracts.DtoAbstract;
-import com.bm.businessmanagement.absctracts.ServiceAbstract;
+import com.bm.businessmanagement.absctracts.BmDto;
+import com.bm.businessmanagement.absctracts.BmService;
 import com.bm.businessmanagement.dtos.UserDto;
 import com.bm.businessmanagement.entities.UserEntity;
 import com.bm.businessmanagement.mappers.UserMapper;
@@ -18,7 +20,7 @@ import lombok.Getter;
 
 @Service
 @Getter
-public class UserService implements ServiceAbstract{
+public class UserService implements BmService{
     
     @Autowired
     private UserRepository userRepository;
@@ -27,14 +29,14 @@ public class UserService implements ServiceAbstract{
     private UserMapper userMapper; 
 
     @Override
-    public DtoAbstract create(DtoAbstract dto) {                
+    public BmDto create(BmDto dto) {                
 
         UserDto newUser = (UserDto) userMapper.entityToDto(userRepository.save((UserEntity) userMapper.dtoToEntity_forCreation(dto)));
         return newUser ;
     }
 
     @Override
-    public DtoAbstract update(DtoAbstract dto) {
+    public BmDto update(BmDto dto) {
         return null;
     }
 
@@ -44,25 +46,25 @@ public class UserService implements ServiceAbstract{
     }
 
     @Override
-    public List<DtoAbstract> findByName(String keyword) {
+    public List<BmDto> findByName(String keyword) {
         
-        List<DtoAbstract> list = new ArrayList<>();
+        List<BmDto> list = new ArrayList<>();
         list.add(userMapper.entityToDto(userRepository.findByName(keyword).get()));
 
         return list;
     }
     
-    public List<DtoAbstract> findByRole(Role role){
+    public List<BmDto> findByRole(Role role){
 
         List<UserEntity> entities = userRepository.findByRole(role);
-        List<DtoAbstract> dtos = new ArrayList<>();
+        List<BmDto> dtos = new ArrayList<>();
 
         entities.stream().forEach(p -> dtos.add(userMapper.entityToDto(p)));
 
         return dtos;        
     }
 
-    public DtoAbstract changeRole(Long userId, List<Role> roles)
+    public BmDto changeRole(Long userId, List<Role> roles)
     {
         UserEntity user = this.userRepository.findById(userId).get();
         
