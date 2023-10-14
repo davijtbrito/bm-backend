@@ -1,14 +1,11 @@
 package com.bm.businessmanagement.entities;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bm.businessmanagement.absctracts.BaseEntity;
@@ -21,19 +18,23 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "client")
-public class ClientEntity extends BaseEntity {
+@Table(name = "contact")
+public class ContactEntity extends BaseEntity {
     
-    public ClientEntity(Long id, String name, Boolean active, 
-    LocalDateTime dateCreated, LocalDateTime dateUpdated) {
-        
+    
+    public ContactEntity(Long id, String email,
+            String phone, Boolean active, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+                
         super(active, dateCreated, dateUpdated);
         this.id = id;
-        this.name = name;                
+        this.email = email;
+        this.phone = phone;
     }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;       
+
+    private String email;
+    private String phone;
 }
