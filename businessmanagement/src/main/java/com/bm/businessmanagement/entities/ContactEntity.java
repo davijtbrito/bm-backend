@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bm.businessmanagement.absctracts.BaseEntity;
@@ -34,4 +36,8 @@ public class ContactEntity extends BaseEntity {
     
     private String email;
     private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private ClientEntity client;
 }

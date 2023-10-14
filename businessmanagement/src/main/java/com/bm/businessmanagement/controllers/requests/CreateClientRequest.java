@@ -1,5 +1,8 @@
 package com.bm.businessmanagement.controllers.requests;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.absctracts.BmRequest;
 import com.bm.businessmanagement.dtos.ClientDto;
@@ -21,10 +24,13 @@ public class CreateClientRequest implements BmRequest{
 
     @Override
     public BmDto getDto() {
+
+        Set<ContactDto> contacts = new HashSet<ContactDto>();
+        contacts.add(new ContactDto(null, email, phone, true));
         return new ClientDto(
             null,
             this.name,
-            new ContactDto(null, email, phone, true),
+            contacts,
             true
         );
     }

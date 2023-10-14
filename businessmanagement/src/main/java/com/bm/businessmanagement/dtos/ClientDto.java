@@ -1,5 +1,7 @@
 package com.bm.businessmanagement.dtos;
 
+import java.util.Set;
+
 import com.bm.businessmanagement.absctracts.BmDto;
 
 import lombok.AllArgsConstructor;
@@ -11,6 +13,6 @@ public class ClientDto implements BmDto{
 
     private Long id;
     private String name;
-    private ContactDto contact;
+    private Set<ContactDto> contacts;
     private Boolean active;
 }

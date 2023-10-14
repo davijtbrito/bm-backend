@@ -1,6 +1,8 @@
 package com.bm.businessmanagement.mappers;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,13 +28,16 @@ public class ClientMapper implements BmMapper{
     public BmDto entityToDto(BmEntity entity) {
         
         ClientEntity clientEntity = (ClientEntity) entity;
-        ContactEntity contactEntity = clientEntity.getContact();
-        ContactDto contactDto = (ContactDto) contactMapper.entityToDto(contactEntity);
+        Set<ContactEntity> contactsEntity = clientEntity.getContacts();
+        Set<ContactDto> contactsDto = new HashSet<ContactDto>();
+        contactsEntity.stream().forEach((c) -> {
+            contactsDto.add((ContactDto) contactMapper.entityToDto(c));
+        });
 
         return new ClientDto(
             clientEntity.getId(),
             clientEntity.getName(),
-            contactDto,
+            contactsDto,
             clientEntity.getActive()
         );            
     }
@@ -40,14 +45,17 @@ public class ClientMapper implements BmMapper{
     @Override
     public BmEntity dtoToEntity_forCreation(BmDto dto) {
 
-        ClientDto clientDto = (ClientDto) dto;
-        ContactDto contactDto = clientDto.getContact();
-        ContactEntity contactEntity = (ContactEntity) contactMapper.dtoToEntity_forCreation(contactDto);
+        ClientDto clientDto = (ClientDto) dto;        
+        Set<ContactEntity> contactsEntity = new HashSet<ContactEntity>();
+
+        clientDto.getContacts().stream().forEach((c) -> {
+            contactsEntity.add((ContactEntity) contactMapper.dtoToEntity_forCreation(c));
+        });        
 
         return new ClientEntity(
             clientDto.getId(),
             clientDto.getName(),
-            contactEntity,
+            contactsEntity,
             true,
             LocalDateTime.now(),
             LocalDateTime.now()

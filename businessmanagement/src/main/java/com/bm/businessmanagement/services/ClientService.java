@@ -10,7 +10,6 @@ import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.absctracts.BmService;
 import com.bm.businessmanagement.dtos.ClientDto;
 import com.bm.businessmanagement.entities.ClientEntity;
-import com.bm.businessmanagement.entities.ContactEntity;
 import com.bm.businessmanagement.mappers.ClientMapper;
 import com.bm.businessmanagement.repositories.ClientRepository;
 import com.bm.businessmanagement.repositories.ContactRepository;
@@ -31,7 +30,7 @@ public class ClientService implements BmService{
     public BmDto create(BmDto dto) {        
 
         ClientEntity clientEntity = (ClientEntity) clientMapper.dtoToEntity_forCreation(dto);
-        this.contactRepository.save(clientEntity.getContact());
+        this.contactRepository.saveAll(clientEntity.getContacts());
 
         return clientMapper.entityToDto(repository.save(clientEntity));
     }
@@ -43,7 +42,7 @@ public class ClientService implements BmService{
         return clientMapper.entityToDto(repository.save(new ClientEntity(
             clientEntity.getId(), 
             clientEntity.getName(),
-            clientEntity.getContact(),
+            clientEntity.getContacts(),
             clientEntity.getActive(), 
             clientEntity.getDateCreated(), 
             LocalDateTime.now())));
@@ -56,7 +55,7 @@ public class ClientService implements BmService{
         clientMapper.entityToDto(repository.save(new ClientEntity(
             clientEntity.getId(), 
             clientEntity.getName(),
-            clientEntity.getContact(),
+            clientEntity.getContacts(),
             isActive, 
             clientEntity.getDateCreated(), 
             LocalDateTime.now())));
