@@ -3,6 +3,7 @@ package com.bm.businessmanagement.services;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -47,10 +48,10 @@ public class ClientService implements BmService{
         ClientDto clientDto = (ClientDto) dto;
         ClientEntity clientEntity = (ClientEntity) clientMapper.dtoToEntity_forCreation(dto);
         clientEntity = repository.save(clientEntity);
-        Long idClient = clientEntity.getId(); 
 
         Set<ContactDto> contacts = new HashSet<ContactDto>();
 
+        Long idClient = clientDto.getId();
         clientDto.getContacts().stream().forEach((c) -> {
             ContactEntity contactEntity = contactRepository.save((ContactEntity) contactMapper.dtoToEntity_forCreation(c));
             contactClientRepository.save(new ContactClientEntity(null, idClient, contactEntity.getId()));
@@ -59,22 +60,39 @@ public class ClientService implements BmService{
         
         clientDto = (ClientDto) clientMapper.entityToDto(clientEntity);
         
-        return new ClientDto(idClient,
+        return new ClientDto(clientDto.getId(),
          clientDto.getName(), 
          clientDto.getActive(), 
          contacts);        
     }
 
     @Override
+    @Transactional
     public BmDto update(BmDto dto) {
-        ClientEntity clientEntity = this.repository.findById(((ClientDto) dto).getId()).get();
-        
-        return clientMapper.entityToDto(repository.save(new ClientEntity(
-            clientEntity.getId(), 
-            clientEntity.getName(),
-            clientEntity.getActive(),             
-            clientEntity.getDateCreated(), 
-            LocalDateTime.now())));
+
+        ClientDto clientDto = (ClientDto) dto;
+        Optional<ClientEntity> clientEntity = repository.findById(clientDto.getId());
+
+        if (clientEntity.isPresent()) {
+            
+            ClientEntity updatedClient = new ClientEntity(
+                clientEntity.get().getId(), 
+                clientDto.getName(), 
+                clientDto.getActive(), 
+                clientEntity.get().getDateCreated(), 
+                LocalDateTime.now());
+
+            updatedClient = (ClientEntity) repository.save(updatedClient);         
+
+            Set<ContactDto> contacts = this.saveContacts(clientDto);
+            clientDto = (ClientDto) clientMapper.entityToDto(updatedClient);
+                                                
+            return new ClientDto(clientDto.getId(), clientDto.getName(), clientDto.getActive(), contacts);  
+
+        }else{
+            return null;
+        }   
+
     }
 
     @Override
@@ -93,6 +111,38 @@ public class ClientService implements BmService{
     public List<BmDto> findByName(String keyword) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByName'");
+    }
+
+    private Set<ContactDto> saveContacts(ClientDto clientDto){
+
+        Set<ContactDto> contacts = new HashSet<ContactDto>();
+
+            Long idClient = clientDto.getId();
+            clientDto.getContacts().stream().forEach((c) -> {
+
+                if (c.getId() == null){
+                    ContactEntity contactEntity = contactRepository.save((ContactEntity) contactMapper.dtoToEntity_forCreation(c));
+                    contactClientRepository.save(new ContactClientEntity(null, idClient, contactEntity.getId()));
+                    contacts.add((ContactDto) contactMapper.entityToDto(contactEntity));
+
+                }else{
+                    Optional<ContactEntity> contactEntityOpt = contactRepository.findById(c.getId());
+                    if(contactEntityOpt.isPresent()){
+                        ContactEntity contactUpdated = contactRepository.save(new ContactEntity(
+                            c.getId(), 
+                            c.getEmail(), 
+                            c.getPhone(), 
+                            true,
+                            contactEntityOpt.get().getDateCreated(), 
+                            LocalDateTime.now()));                       
+                        
+                        contacts.add((ContactDto) contactMapper.entityToDto(contactUpdated));
+                    }                    
+                }
+                
+            });
+
+        return contacts;
     }
     
 }
