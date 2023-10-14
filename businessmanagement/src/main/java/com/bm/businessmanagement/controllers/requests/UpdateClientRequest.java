@@ -12,21 +12,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateClientRequest implements BmRequest{
-
-    private String name;
-    private String phone;
-    private String email;
+public class UpdateClientRequest implements BmRequest{
     
+    private Long id;
+    private String name;
 
     @Override
     public BmDto getDto() {
-
-        return new ClientDto(
-            null,
-            this.name,
-            true
-        );
+        return new ClientDto(id, name, true);
     }
-    
 }
