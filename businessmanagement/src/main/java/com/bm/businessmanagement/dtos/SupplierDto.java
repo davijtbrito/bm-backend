@@ -10,13 +10,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ClientDto implements BmDto, UseContactDto{
-
+public class SupplierDto implements BmDto, UseContactDto {
+    
     private Long id;
     private String name;
     private Boolean active;
     private Set<ContactDto> contacts;
-
+    
     @Override
     public void setContacts(Set<ContactDto> contacts) {
         this.contacts = contacts;
