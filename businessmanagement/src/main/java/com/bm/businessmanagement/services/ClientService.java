@@ -58,6 +58,7 @@ public class ClientService implements BmService{
             contacts.add((ContactDto) contactMapper.entityToDto(contactEntity));            
         });
         
+        clientMapper.setContacts(contacts);
         clientDto = (ClientDto) clientMapper.entityToDto(clientEntity);
         
         return new ClientDto(clientDto.getId(),
@@ -83,11 +84,12 @@ public class ClientService implements BmService{
                 LocalDateTime.now());
 
             updatedClient = (ClientEntity) repository.save(updatedClient);         
+            
+            this.clientMapper.setContacts(this.saveContacts(clientDto));
 
-            Set<ContactDto> contacts = this.saveContacts(clientDto);
             clientDto = (ClientDto) clientMapper.entityToDto(updatedClient);
                                                 
-            return new ClientDto(clientDto.getId(), clientDto.getName(), clientDto.getActive(), contacts);  
+            return clientDto;  
 
         }else{
             return null;

@@ -1,5 +1,7 @@
 package com.bm.businessmanagement.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "supplier")
 public class SupplierEntity extends BaseEntity {
-    
+        
+    public SupplierEntity(Long id, String name, Boolean active, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
+        super(active, dateCreated, dateUpdated);
+        this.id = id;
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
