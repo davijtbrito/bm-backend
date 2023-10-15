@@ -7,6 +7,13 @@ import com.bm.businessmanagement.absctracts.BmRequest;
 import com.bm.businessmanagement.dtos.ContactDto;
 import com.bm.businessmanagement.dtos.SupplierDto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateSupplierRequest implements BmRequest {
 
     private Long id;

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.absctracts.BmService;
@@ -23,6 +24,7 @@ import com.bm.businessmanagement.repositories.ContactRepository;
 import com.bm.businessmanagement.repositories.ContactSupplierRepository;
 import com.bm.businessmanagement.repositories.SupplierRepository;
 
+@Service
 public class SupplierService implements BmService, SaveContact{
 
     @Autowired
@@ -48,12 +50,7 @@ public class SupplierService implements BmService, SaveContact{
 
         Set<ContactDto> contacts = new HashSet<ContactDto>();
 
-        Long idSupplier = supplierDto.getId();
-        supplierDto.getContacts().stream().forEach((c) -> {
-            ContactEntity contactEntity = contactRepository.save((ContactEntity) contactMapper.dtoToEntity_forCreation(c));
-            contactSupplierRepository.save(new ContactSupplierEntity(null, idSupplier, contactEntity.getId()));
-            contacts.add((ContactDto) contactMapper.entityToDto(contactEntity));            
-        });
+        contacts = this.saveContacts(supplierEntity.getId(), supplierDto.getContacts());
         
         supplierMapper.setContacts(contacts);
         supplierDto = (SupplierDto) supplierMapper.entityToDto(supplierEntity);
@@ -72,7 +69,7 @@ public class SupplierService implements BmService, SaveContact{
         if (supplierEntityOpt.isPresent()) {
             
             SupplierEntity updatedSupplier = new SupplierEntity(
-                supplierEntityOpt.get().getId(), 
+                supplierDto.getId(), 
                 supplierDto.getName(), 
                 supplierDto.getActive(), 
                 supplierEntityOpt.get().getDateCreated(), 

@@ -1,5 +1,6 @@
 package com.bm.businessmanagement.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.bm.businessmanagement.services.SupplierService;
 @RequestMapping("/supplier")
 public class SupplierController {
     
+    @Autowired
     private SupplierService supplierService;
 
     @PostMapping("/create")    
