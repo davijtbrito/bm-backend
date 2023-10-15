@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class ProductService implements BmService{
     private ProductMapper productMapper;
 
     @Override
+    @Transactional
     public BmDto create(BmDto dto) {
         ProductDto productDto = (ProductDto) dto;
         ProductEntity productCreated = this.productRepository.save((ProductEntity) this.productMapper.dtoToEntity_forCreation(productDto));
@@ -33,6 +36,7 @@ public class ProductService implements BmService{
     }
 
     @Override
+    @Transactional
     public BmDto update(BmDto dto) {
         ProductDto productDto = (ProductDto) dto;
         Optional<ProductEntity> entityOpt = this.productRepository.findById(productDto.getId());
@@ -55,6 +59,7 @@ public class ProductService implements BmService{
     }
 
     @Override
+    @Transactional
     public void activateDeactivate(Long id, boolean isActive) {
         Optional<ProductEntity> entityOpt = this.productRepository.findById(id);
 

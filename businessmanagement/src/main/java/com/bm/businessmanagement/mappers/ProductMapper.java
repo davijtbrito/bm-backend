@@ -2,12 +2,15 @@ package com.bm.businessmanagement.mappers;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.absctracts.BmEntity;
 import com.bm.businessmanagement.absctracts.BmMapper;
 import com.bm.businessmanagement.dtos.ProductDto;
 import com.bm.businessmanagement.entities.ProductEntity;
 
+@Component
 public class ProductMapper implements BmMapper {
 
     @Override

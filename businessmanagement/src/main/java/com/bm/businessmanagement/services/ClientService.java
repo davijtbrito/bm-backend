@@ -92,6 +92,7 @@ public class ClientService implements BmService, SaveContact{
     }
 
     @Override
+    @Transactional
     public void activateDeactivate(Long id, boolean isActive) {
         ClientEntity clientEntity = this.repository.findById(id).get();
         

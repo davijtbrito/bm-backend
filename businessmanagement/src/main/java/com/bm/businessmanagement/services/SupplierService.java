@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,7 @@ public class SupplierService implements BmService, SaveContact{
     private ContactMapper contactMapper; 
 
     @Override
+    @Transactional
     public BmDto create(BmDto dto) {
         SupplierDto supplierDto = (SupplierDto) dto;
         SupplierEntity supplierEntity = (SupplierEntity) supplierMapper.dtoToEntity_forCreation(dto);
@@ -61,6 +64,7 @@ public class SupplierService implements BmService, SaveContact{
     }
 
     @Override
+    @Transactional
     public BmDto update(BmDto dto) {
         SupplierDto supplierDto = (SupplierDto) dto;
         Optional<SupplierEntity> supplierEntityOpt = supplierRepository.findById(supplierDto.getId());
@@ -88,6 +92,7 @@ public class SupplierService implements BmService, SaveContact{
     }
 
     @Override
+    @Transactional
     public void activateDeactivate(Long id, boolean isActive) {
         SupplierEntity supplierEntity = this.supplierRepository.findById(id).get();
         
