@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.bm.businessmanagement.absctracts.BmDto;
 import com.bm.businessmanagement.absctracts.BmService;
 import com.bm.businessmanagement.absctracts.SaveContact;
-import com.bm.businessmanagement.dtos.ClientDto;
 import com.bm.businessmanagement.dtos.ContactDto;
 import com.bm.businessmanagement.dtos.SupplierDto;
 import com.bm.businessmanagement.entities.ContactEntity;
@@ -55,7 +54,7 @@ public class SupplierService implements BmService, SaveContact{
         supplierMapper.setContacts(contacts);
         supplierDto = (SupplierDto) supplierMapper.entityToDto(supplierEntity);
         
-        return new ClientDto(supplierDto.getId(),
+        return new SupplierDto(supplierDto.getId(),
          supplierDto.getName(), 
          supplierDto.getActive(), 
          contacts);       
