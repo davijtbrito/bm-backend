@@ -29,6 +29,7 @@ public class UserService implements BmService{
     private UserMapper userMapper; 
 
     @Override
+    @Transactional
     public BmDto create(BmDto dto) {                
 
         UserDto newUser = (UserDto) userMapper.entityToDto(userRepository.save((UserEntity) userMapper.dtoToEntity_forCreation(dto)));
@@ -36,11 +37,13 @@ public class UserService implements BmService{
     }
 
     @Override
+    @Transactional
     public BmDto update(BmDto dto) {
         return null;
     }
 
     @Override
+    @Transactional
     public void activateDeactivate(Long id, boolean isActive) {
         
     }
